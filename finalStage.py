@@ -113,6 +113,8 @@ async def button_handler(update, context):
             "- Бассейн и SPA\n"
             "- Трансфер из/в аэропорт"
         )
+        return ConversationHandler.END
+
     elif query.data == "contacts":
         await query.message.reply_text(
             "Наши контактные данные:\n"
@@ -120,6 +122,8 @@ async def button_handler(update, context):
             "- Электронная почта: contact@dreamstay.com\n"
             "- Адрес: ул. Мира, 10, Киев"
         )
+        return ConversationHandler.END
+
 
 # Відправка фото
 async def send_photos(update, context):
@@ -142,7 +146,7 @@ app.add_handler(CommandHandler("broadcast", broadcast_message))
 
 # Обробник конверсій для бронирования
 booking_handler = ConversationHandler(
-    entry_points=[CallbackQueryHandler(button_handler, pattern="^book$")],
+    entry_points=[CallbackQueryHandler(button_handler, pattern="^(book, services, contacts)$")],
     states={
         DATE_START: [MessageHandler(filters.TEXT & ~filters.COMMAND, date_start)],
         DATE_END: [MessageHandler(filters.TEXT & ~filters.COMMAND, date_end)],
